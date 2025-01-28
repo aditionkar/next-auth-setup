@@ -1,11 +1,17 @@
+"use client";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { IconBrandGithub, IconBrandGoogle } from "@tabler/icons-react";
 import Link from "next/link";
-import { redirect } from "next/navigation";
 import Image from 'next/image';
+import { login } from "@/action/user";
 
 function LogInPage() {
+  {/*const handleSubmit = async (event) => {
+    event.preventDefault();
+    const formData = new FormData(event.target);
+    await login(formData);
+  };*/}
   return (
     <div>
       <div className="min-w-screen  flex items-center justify-center px-5 py-5 mt-14">
@@ -28,7 +34,7 @@ function LogInPage() {
               <p className="text-sm text-gray-600 mb-5">
                 Log in to your account. It’s quick and easy!
               </p>
-              <form>
+              <form action={login}>
                 <div className="flex -mx-3 mt-5">
                   <div className="w-full px-3">
                     <Label
@@ -73,7 +79,7 @@ function LogInPage() {
                       type="submit"
                       className="block w-full text-white text-sm font-semibold rounded-lg px-4 py-2 bg-indigo-500 hover:bg-indigo-600"
                     >
-                      Create Account
+                      Login
                     </button>
 
                     <Link

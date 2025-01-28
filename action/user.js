@@ -3,7 +3,28 @@
 import connectDB from "@/lib/db";
 import { User } from "@/models/user";
 import { hash } from "bcryptjs";
+import { CredentialsSignin } from "next-auth";
 import { redirect } from "next/navigation";
+import { signIn } from "next-auth/react"; // Correct import
+
+
+const login = async (formData) => {
+  const email = formData.get('email');
+  const password = formData.get('password');
+  try {
+    await signIn('credentials', {
+      redirect: false,
+      callbackUrl: "/",
+      email,
+      password,
+    });
+    redirect("/");
+  } catch (error) {
+    const someError = error;
+    return someError.cause;
+  }
+  
+}
 
 const signin = async (formData) => {
     const firstName = formData.get('firstName');
@@ -30,4 +51,4 @@ const signin = async (formData) => {
 
   };
   
-  export {signin};
+  export {signin, login};
