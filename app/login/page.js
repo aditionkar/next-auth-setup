@@ -5,13 +5,35 @@ import { IconBrandGithub, IconBrandGoogle } from "@tabler/icons-react";
 import Link from "next/link";
 import Image from 'next/image';
 import { login } from "@/action/user";
+import { useState } from "react";
+import { signIn } from "next-auth/react";
 
 function LogInPage() {
-  {/*const handleSubmit = async (event) => {
+  const [error, setError] = useState("");
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const formData = new FormData(event.target);
-    await login(formData);
-  };*/}
+    const email = formData.get("email");
+    const password = formData.get("password");
+
+    try {
+      const result = await signIn("credentials", {
+        redirect: false,
+        email,
+        password,
+      });
+
+      if (result?.error) {
+        throw new Error(result.error);
+      }
+
+      window.location.href = "/"; // Redirect to home page on successful login
+    } catch (error) {
+      setError(error.message);
+    }
+  };
+
   return (
     <div>
       <div className="min-w-screen  flex items-center justify-center px-5 py-5 mt-14">
@@ -34,7 +56,8 @@ function LogInPage() {
               <p className="text-sm text-gray-600 mb-5">
                 Log in to your account. It’s quick and easy!
               </p>
-              <form action={login}>
+              {error && <p className="text-red-500 text-sm mb-5">{error}</p>}
+              <form onSubmit={handleSubmit}>
                 <div className="flex -mx-3 mt-5">
                   <div className="w-full px-3">
                     <Label
