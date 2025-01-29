@@ -1,12 +1,13 @@
 "use client";
+
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { IconBrandGithub, IconBrandGoogle } from "@tabler/icons-react";
 import Link from "next/link";
-import Image from 'next/image';
-import { login } from "@/action/user";
+import Image from "next/image";
 import { useState } from "react";
 import { signIn } from "next-auth/react";
+import LoginGithub from "@/components/LoginGithub";
 
 function LogInPage() {
   const [error, setError] = useState("");
@@ -28,7 +29,7 @@ function LogInPage() {
         throw new Error(result.error);
       }
 
-      window.location.href = "/"; // Redirect to home page on successful login
+      window.location.href = "/";
     } catch (error) {
       setError(error.message);
     }
@@ -36,7 +37,7 @@ function LogInPage() {
 
   return (
     <div>
-      <div className="min-w-screen  flex items-center justify-center px-5 py-5 mt-14">
+      <div className="min-w-screen flex items-center justify-center px-5 py-5 mt-14">
         <div
           className="bg-gray-100 text-gray-500 rounded-3xl shadow-xl w-full overflow-hidden"
           style={{ maxWidth: "1000px" }}
@@ -48,7 +49,7 @@ function LogInPage() {
                 alt="Security-bro"
                 width={600}
                 height={600}
-              ></Image>
+              />
             </div>
             <div className="w-full md:w-1/2 py-10 px-5 md:px-10">
               <h2 className="text-3xl font-bold text-gray-800 mb-5">Log in</h2>
@@ -60,11 +61,8 @@ function LogInPage() {
               <form onSubmit={handleSubmit}>
                 <div className="flex -mx-3 mt-5">
                   <div className="w-full px-3">
-                    <Label
-                      htmlFor="email"
-                      className="text-xs font-semibold px-1"
-                    >
-                      Email{" "}
+                    <Label htmlFor="email" className="text-xs font-semibold px-1">
+                      Email
                     </Label>
                     <div className="flex items-center">
                       <Input
@@ -79,10 +77,7 @@ function LogInPage() {
                 </div>
                 <div className="flex -mx-3 mt-5">
                   <div className="w-full px-3">
-                    <Label
-                      htmlFor="password"
-                      className="text-xs font-semibold px-1"
-                    >
+                    <Label htmlFor="password" className="text-xs font-semibold px-1">
                       Password
                     </Label>
                     <div className="flex items-center">
@@ -90,7 +85,7 @@ function LogInPage() {
                         id="password"
                         type="password"
                         className="w-full px-4 py-2 text-xs border border-gray-200 rounded-lg focus:ring-2 bg-white text-black"
-                        placeholder="************"
+                        placeholder=""
                         name="password"
                       />
                     </div>
@@ -107,7 +102,7 @@ function LogInPage() {
 
                     <Link
                       href="/signIn"
-                      className=" mt-3 text-center block w-full bg-indigo-500 hover:bg-indigo-600 text-white text-sm font-semibold rounded-lg px-4 py-2"
+                      className="mt-3 text-center block w-full bg-indigo-500 hover:bg-indigo-600 text-white text-sm font-semibold rounded-lg px-4 py-2"
                     >
                       Don't have an account? Sign in here
                     </Link>
@@ -115,29 +110,16 @@ function LogInPage() {
                 </div>
               </form>
               <section className="flex mt-8 space-x-5 w-full">
-                <form>
-                  <button
-                    className="bg-white hover:scale-95 duration-200 ease-in-out ring-1 ring-black relative group/btn flex space-x-2 items-center justify-start px-4 py-2 w-full text-black rounded-md h-10 font-medium shadow-input dark:bg-zinc-900 dark:shadow-[0px_0px_1px_1px_var(--neutral-800)]"
-                    type="submit"
-                  >
-                    <IconBrandGithub className="h-4 w-4 text-neutral-800 dark:text-neutral-300" />
-                    <span className="text-neutral-700 dark:text-neutral-300 text-sm">
-                      Log in with Github
-                    </span>
-                  </button>
-                </form>
-                <form>
-                  <button
-                    className=" hover:scale-95 duration-200 ease-in-out ring-1 ring-black relative group/btn flex space-x-2 items-center justify-start px-4 py-2 w-full text-black rounded-md h-10 font-medium shadow-input bg-white dark:bg-zinc-900 dark:shadow-[0px_0px_1px_1px_var(--neutral-800)]"
-                    type="submit"
-                  >
-                    <IconBrandGoogle className="h-4 w-4 text-neutral-800 dark:text-neutral-300" />
-                    <span className="text-neutral-700 dark:text-neutral-300 text-sm">
-                      {" "}
-                      Log in with Google
-                    </span>
-                  </button>
-                </form>
+                <LoginGithub />
+                <button
+                  className="hover:scale-95 duration-200 ease-in-out ring-1 ring-black relative group/btn flex space-x-2 items-center justify-start px-4 py-2 w-full text-black rounded-md h-10 font-medium shadow-input bg-white dark:bg-zinc-900 dark:shadow-[0px_0px_1px_1px_var(--neutral-800)]"
+                  onClick={() => signIn("google")}
+                >
+                  <IconBrandGoogle className="h-4 w-4 text-neutral-800 dark:text-neutral-300" />
+                  <span className="text-neutral-700 dark:text-neutral-300 text-sm">
+                    Log in with Google
+                  </span>
+                </button>
               </section>
             </div>
           </div>
