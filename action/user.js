@@ -29,4 +29,15 @@ const signin = async (formData) => {
   redirect("/login");
 };
 
-export { signin };
+const fetchAllUsers = async () => {
+  await connectDB();
+  const users = await User.find({}).lean();
+  // Convert _id (ObjectId) to string
+  const sanitizedUsers = users.map(user => ({
+    ...user,
+    _id: user._id.toString() // ✅ Convert ObjectId to string
+  }));
+  return sanitizedUsers;
+};
+
+export { signin, fetchAllUsers };
