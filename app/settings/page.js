@@ -14,8 +14,7 @@ function Settings() {
         </thead>
 
         <tbody>
-          {/*will render and be able to delete users*/}
-          <th className='text-center'>It ia a private route</th>
+          <tr><th className='text-center'>It ia a private route</th></tr>
         </tbody>
       </table>
     </div>
