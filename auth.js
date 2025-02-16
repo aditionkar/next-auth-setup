@@ -1,15 +1,15 @@
-import NextAuth, { CredentialsSignin } from "next-auth";
+import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import GithubProvider from "next-auth/providers/github";
 import connectDB from "./lib/db";
 import { User } from "./models/user";
 import { compare } from "bcryptjs";
-import Github from "next-auth/providers/github";
- 
+
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
-   Github({
+    GithubProvider({
       clientId: process.env.GITHUB_CLIENT_ID,
-      clientSecret: process.env.GITHUB_CLIENT_SECRET
+      clientSecret: process.env.GITHUB_CLIENT_SECRET,
     }),
 
     CredentialsProvider({
@@ -49,6 +49,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           id: user._id,
         };
 
+        // Logs user data only during login (authorize callback)
+        console.log("User Logged In:", userData);
+
         return userData;
       },
     }),
@@ -65,9 +68,37 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       return token;
     },
     async session({ session, token }) {
-      session.user.id = token.id;
-      session.user.role = token.role;
+      if (token?.id && token?.role) {
+        session.user.id = token.id;
+        session.user.role = token.role;
+      }
       return session;
+    },
+    async signIn({ user, account }) {
+      if (account?.provider === "github") {
+        try {
+          const { email, name, image, id } = user;
+          await connectDB();
+          const alreadyUser = await User.findOne({ email });
+
+          if (!alreadyUser) {
+            await User.create({ email, name, image, authProviderId: id });
+          }
+
+          //Logs GitHub login 
+          console.log("GitHub User Logged In:", { email, name, id });
+
+          return true;
+        } catch (error) {
+          console.error("Error while creating GitHub user:", error);
+          return false;
+        }
+      }
+
+      if (account?.provider === "credentials") {
+        return true;
+      }
+      return true; 
     },
   },
   secret: process.env.AUTH_SECRET,

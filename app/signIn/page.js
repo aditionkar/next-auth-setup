@@ -5,6 +5,9 @@ import { Label } from "@/components/ui/label";
 import Link from "next/link";
 import Image from "next/image";
 import { signin } from "@/action/user";
+import { useSession } from "next-auth/react";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 function SignInPage() {
   const handleSubmit = async (event) => {
@@ -12,6 +15,20 @@ function SignInPage() {
     const formData = new FormData(event.target);
     await signin(formData);
   };
+
+  const { data: session, status } = useSession();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (status === "authenticated") {
+      router.replace("/");
+    }
+  }, [status, router]);
+
+  if (status === "loading" || status === "authenticated") {
+    return null; // Prevents rendering while checking session or redirecting
+  }
+
   return (
     <div>
       <div className="min-w-screen flex items-center justify-center px-5 py-5 mt-14">

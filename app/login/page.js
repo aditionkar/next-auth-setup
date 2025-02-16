@@ -8,9 +8,26 @@ import Image from "next/image";
 import { useState } from "react";
 import { signIn } from "next-auth/react";
 import LoginGithub from "@/components/LoginGithub";
+import { useSession } from "next-auth/react";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 function LogInPage() {
   const [error, setError] = useState("");
+
+  const { data: session, status } = useSession();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (status === "authenticated") {
+      router.replace("/");
+    }
+  }, [status, router]);
+
+  if (status === "loading" || status === "authenticated") {
+    return null; // Prevents rendering while checking session or redirecting
+  }
+
 
   const handleSubmit = async (event) => {
     event.preventDefault();
