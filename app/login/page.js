@@ -2,7 +2,7 @@
 
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { IconBrandGithub, IconBrandGoogle } from "@tabler/icons-react";
+import { IconBrandGoogle } from "@tabler/icons-react";
 import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
@@ -25,7 +25,7 @@ function LogInPage() {
   }, [status, router]);
 
   if (status === "loading" || status === "authenticated") {
-    return null; // Prevents rendering while checking session or redirecting
+    return null; 
   }
 
 

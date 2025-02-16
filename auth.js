@@ -49,8 +49,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           id: user._id,
         };
 
-        // Logs user data only during login (authorize callback)
-        console.log("User Logged In:", userData);
+        /* Logs user data only during login (authorize callback)
+        console.log("User Logged In:", userData);*/
 
         return userData;
       },
@@ -85,8 +85,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             await User.create({ email, name, image, authProviderId: id });
           }
 
-          //Logs GitHub login 
-          console.log("GitHub User Logged In:", { email, name, id });
+          /*Logs GitHub login 
+          console.log("GitHub User Logged In:", { email, name, id });*/
 
           return true;
         } catch (error) {
@@ -101,6 +101,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       return true; 
     },
   },
+  
   secret: process.env.AUTH_SECRET,
   session: {
     strategy: "jwt",

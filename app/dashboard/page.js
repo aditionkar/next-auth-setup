@@ -11,7 +11,7 @@ function Dashboard() {
 
   useEffect(() => {
     if (status === "unauthenticated") {
-      router.replace("/login"); // Redirect unauthenticated users to login
+      router.replace("/login");
     }
   }, [status, router]);
 

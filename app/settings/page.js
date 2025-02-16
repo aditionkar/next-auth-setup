@@ -1,4 +1,4 @@
-"use client"; // Ensure this is a Client Component
+"use client"; 
 
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
@@ -14,14 +14,14 @@ const Settings = () => {
 
   useEffect(() => {
     if (status === "unauthenticated") {
-      router.replace("/login"); // Redirect to login page
+      router.replace("/login");
     } else if (status === "authenticated") {
-      fetchAllUsers().then((users) => setAllUsers(users)); // Fetch users after authentication
+      fetchAllUsers().then((users) => setAllUsers(users)); 
     }
   }, [status, router]);
 
   if (status === "loading" || status === "unauthenticated") {
-    return null; // Prevents rendering while redirecting
+    return null;
   }
 
   return (
