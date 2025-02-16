@@ -25,9 +25,8 @@ function LogInPage() {
   }, [status, router]);
 
   if (status === "loading" || status === "authenticated") {
-    return null; 
+    return null;
   }
-
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -35,21 +34,18 @@ function LogInPage() {
     const email = formData.get("email");
     const password = formData.get("password");
 
-    try {
-      const result = await signIn("credentials", {
-        redirect: false,
-        email,
-        password,
-      });
+    const result = await signIn("credentials", {
+      redirect: false,
+      email,
+      password,
+    });
 
-      if (result?.error) {
-        throw new Error(result.error);
-      }
-
-      window.location.href = "/";
-    } catch (error) {
-      setError(error.message);
+    if (!result || result.error) {
+      setError("Invalid email or password");
+      return;
     }
+
+    window.location.href = "/";
   };
 
   return (
@@ -74,11 +70,33 @@ function LogInPage() {
               <p className="text-sm text-gray-600 mb-5">
                 Log in to your account. It’s quick and easy!
               </p>
-              {error && <p className="text-red-500 text-sm mb-5">{error}</p>}
+              {/*Error msg*/}
+              {error && (
+                <div className="flex items-center space-x-2 bg-red-100 text-red-600 px-4 py-2 rounded-lg mb-5 border border-red-400">
+                  <svg
+                    className="w-5 h-5 text-red-600"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M6 18L18 6M6 6l12 12"
+                    />
+                  </svg>
+                  <span className="text-sm font-semibold">{error}</span>
+                </div>
+              )}
               <form onSubmit={handleSubmit}>
                 <div className="flex -mx-3 mt-5">
                   <div className="w-full px-3">
-                    <Label htmlFor="email" className="text-xs font-semibold px-1">
+                    <Label
+                      htmlFor="email"
+                      className="text-xs font-semibold px-1"
+                    >
                       Email
                     </Label>
                     <div className="flex items-center">
@@ -94,7 +112,10 @@ function LogInPage() {
                 </div>
                 <div className="flex -mx-3 mt-5">
                   <div className="w-full px-3">
-                    <Label htmlFor="password" className="text-xs font-semibold px-1">
+                    <Label
+                      htmlFor="password"
+                      className="text-xs font-semibold px-1"
+                    >
                       Password
                     </Label>
                     <div className="flex items-center">
