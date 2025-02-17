@@ -37,7 +37,7 @@ function SignInPage() {
           style={{ maxWidth: "1000px" }}
         >
           <div className="md:flex w-full">
-            <div className="hidden md:block w-1/2 bg-indigo-500 py-10 px-10">
+            <div className="hidden md:block w-1/2 bg-green-600 py-10 px-10">
               <Image
                 src="/Security-bro.svg"
                 alt="Security-bro"
@@ -130,14 +130,14 @@ function SignInPage() {
                   <div className="w-full px-3">
                     <button
                       type="submit"
-                      className="block w-full text-white text-sm font-semibold rounded-lg px-4 py-2 bg-indigo-500 hover:bg-indigo-600"
+                      className="block w-full text-white text-sm font-semibold rounded-lg px-4 py-2 bg-green-600 hover:bg-green-700"
                     >
                       Create Account
                     </button>
 
                     <Link
                       href="/login"
-                      className=" mt-3 text-center block w-full bg-indigo-500 hover:bg-indigo-600 text-white text-sm font-semibold rounded-lg px-4 py-2"
+                      className=" mt-3 text-center block w-full bg-green-600 hover:bg-green-700 text-white text-sm font-semibold rounded-lg px-4 py-2"
                     >
                       Already have an account? Log in here
                     </Link>

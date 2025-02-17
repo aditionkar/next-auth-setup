@@ -54,7 +54,19 @@ export default {
   			lg: 'var(--radius)',
   			md: 'calc(var(--radius) - 2px)',
   			sm: 'calc(var(--radius) - 4px)'
-  		}
+  		},
+
+	    animation: {
+			  bounceUpDown: 'bounceUpDown 2s infinite',
+			},
+			keyframes: {
+			  bounceUpDown: {
+				'0%': { transform: 'translateY(0)' },
+				'50%': { transform: 'translateY(-20px)' },
+				'100%': { transform: 'translateY(0)' },
+			  },
+			},
+
   	}
   },
   plugins: [require("tailwindcss-animate")],
