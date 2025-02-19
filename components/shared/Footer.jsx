@@ -3,7 +3,7 @@ import { Facebook, Instagram, Youtube, Twitter } from "lucide-react";
 
 const Footer = () => {
   return (
-    <div className="mt-[150px] overflow-hidden">
+    <div className="mt-80 md:mt-[150px]">
       <div className="bg-[#1E5631] py-[30px] font-play text-center h-[220px]">
         {/* Social Icons */}
         <div className="w-full my-1 py-[0.6%] text-[#e8d1f4] text-[25px] flex justify-center space-x-6">

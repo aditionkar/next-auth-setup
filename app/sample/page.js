@@ -26,10 +26,10 @@ function page() {
   return (
     <>
       <div className="bg-gradient-to-b from-green-100 to-white  h-[55vh] flex flex-col items-center py-20 ">
-        <h1 className="text-center text-4xl font-bold text-[#1E5631] mb-4">
+        <h1 className="text-center text-4xl font-bold text-[#1E5631] mb-4 p-5">
           Discover Your Carbon Footprint
         </h1>
-        <p className="text-lg text-gray-600 mb-10">
+        <p className="text-lg text-gray-600 mb-10 p-5">
           Calculate and understand your impact on the environment.
         </p>
 

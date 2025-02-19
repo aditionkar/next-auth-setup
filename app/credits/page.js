@@ -7,19 +7,18 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
 function page() {
-
   const { data: session, status } = useSession();
-    const router = useRouter();
-  
-    useEffect(() => {
-      if (status === "unauthenticated") {
-        router.replace("/login");
-      }
-    }, [status, router]);
-  
-    if (status === "loading" || status === "unauthenticated") {
-      return null; // Prevents rendering while redirecting
+  const router = useRouter();
+
+  useEffect(() => {
+    if (status === "unauthenticated") {
+      router.replace("/login");
     }
+  }, [status, router]);
+
+  if (status === "loading" || status === "unauthenticated") {
+    return null; // Prevents rendering while redirecting
+  }
 
   const [showFootprint, setShowFootprint] = useState(false);
   const totalFootprint = 250; // Example total footprint value
@@ -33,6 +32,26 @@ function page() {
       : totalFootprint <= 400
       ? 4
       : 5;
+
+  // Function to calculate credits based on level
+  const calculateCredits = (level) => {
+    switch (level) {
+      case 1:
+        return 100;
+      case 2:
+        return 80;
+      case 3:
+        return 60;
+      case 4:
+        return 40;
+      case 5:
+        return 20;
+      default:
+        return 0;
+    }
+  };
+
+  const credits = calculateCredits(level);
 
   const chartRef = useRef(null);
   const myChartRef = useRef(null);
@@ -151,6 +170,9 @@ function page() {
                 </p>
                 <p className="text-xl mt-2 font-semibold text-gray-800">
                   {`Total Footprint: ${totalFootprint} kg CO₂`}
+                </p>
+                <p className="text-xl mt-2 font-semibold text-gray-800">
+                  {`Credits: ${credits}`}
                 </p>
               </div>
             )}
